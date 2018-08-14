@@ -30,7 +30,31 @@ let postCategory = async (req, res, next) => {
   };
 };
 
+let deleteCategory = async (req, res, next) => {
+  try {
+    await Category.findById(req.params.categoryName).remove();
+  } catch (err) {
+    res.status(500).send({error: err.message});
+  }
+};
+
+let getAllCategoris = async (req, res, next) => {
+  try {
+    let results = await Category.find();
+    res.status(200).json(results);
+  } catch (err) {
+    res.status(500).send({error: err.message});
+  }
+};
+
+let putArticlestoCategory = async (req, res, next) => {
+  res.status(501).send('Method Not Implemented!');
+};
+
 module.exports = {
   getCategory: getCategory,
-  postCategory: postCategory
+  postCategory: postCategory,
+  deleteCategory: deleteCategory,
+  getAllCategoris: getAllCategoris,
+  putArticlestoCategory: putArticlestoCategory
 };

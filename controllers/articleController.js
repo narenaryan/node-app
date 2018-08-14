@@ -30,7 +30,31 @@ let postArticle = async (req, res, next) => {
   }
 };
 
+let deleteArticle = async (req, res, next) => {
+  try {
+    await Article.findById(req.params.articleId).remove();
+  } catch (err) {
+    res.status(500).send({error: err.message});
+  }
+};
+
+let getAllArticles = async (req, res, next) => {
+  try {
+    let results = await Article.find();
+    res.status(200).json(results);
+  } catch (err) {
+    res.status(500).send({error: err.message});
+  }
+};
+
+let putCategoriestoArticle = async (req, res, next) => {
+  res.status(501).send('Method Not Implemented!');
+};
+
 module.exports = {
   getArticle: getArticle,
-  postArticle: postArticle
+  postArticle: postArticle,
+  deleteArticle: deleteArticle,
+  getAllArticles: getAllArticles,
+  putCategoriestoArticle: putCategoriestoArticle
 };

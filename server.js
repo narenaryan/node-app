@@ -14,8 +14,8 @@ function main () {
   }));
   app.use(bodyParser.json());
   app.use(morgan('combined'));
-  app.use('/', baseRouter);
-  app.listen(port, () => console.log(`Server listening on port: ${port}`));
+  app.use('/v1', baseRouter);
+  app.listen(port, () => console.log(`Server is listening on port: ${port}`));
 }
 
 main();

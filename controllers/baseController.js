@@ -1,6 +1,7 @@
 let models = require('../models/customerModel.js');
 let jwt = require('jsonwebtoken');
 let config = require('../config.js');
+let Customer = models.Customer;
 
 let index = (req, res) => {
   res.send('NOT IMPLEMENTED: because it is Single Page App');
@@ -41,7 +42,7 @@ let login = (req, res) => {
 };
 
 let postCustomer = (req, res, next) => {
-  let newCustomer = new models.Customer({
+  let newCustomer = new Customer({
     username: req.body.username,
     password: req.body.password,
     email: req.body.email,
@@ -58,13 +59,37 @@ let postCustomer = (req, res, next) => {
   res.sendStatus(201);
 };
 
-let getCustomer = (req, res, next) => {
-  res.send('NOT IMPLEMENTED');
+let getCustomer = async (req, res, next) => {
+  try {
+    let article = await Customer.findById(req.params.customerId);
+    res.send(article);
+  } catch (err) {
+    res.status(500).send({error: err.message});
+  }
+};
+
+let deleteCustomer = async (req, res, next) => {
+  try {
+    await Customer.findById(req.params.customerId).remove();
+  } catch (err) {
+    res.status(500).send({error: err.message});
+  }
+};
+
+let getAllCustomers = async (req, res, next) => {
+  try {
+    let results = await Customer.find();
+    res.status(200).json(results);
+  } catch (err) {
+    res.status(500).send({error: err.message});
+  }
 };
 
 module.exports = {
   index: index,
   login: login,
   postCustomer: postCustomer,
-  getCustomer: getCustomer
+  getCustomer: getCustomer,
+  deleteCustomer: deleteCustomer,
+  getAllCustomers: getAllCustomers
 };
