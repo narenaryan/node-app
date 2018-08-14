@@ -2,12 +2,12 @@ let models = require('../models/customerModel.js');
 let jwt = require('jsonwebtoken');
 let config = require('../config.js');
 
-exports.index = (req, res) => {
+let index = (req, res) => {
   res.send('NOT IMPLEMENTED: because it is Single Page App');
 };
 
 // First method to be called to receive JWT token
-exports.login = (req, res) => {
+let login = (req, res) => {
   models.Customer.findOne({'email': req.body.email}, (err, customer) => {
     if (err) {
       res.status(500).send(err.message);
@@ -40,7 +40,7 @@ exports.login = (req, res) => {
   });
 };
 
-exports.postCustomer = (req, res, next) => {
+let postCustomer = (req, res, next) => {
   let newCustomer = new models.Customer({
     username: req.body.username,
     password: req.body.password,
@@ -56,4 +56,15 @@ exports.postCustomer = (req, res, next) => {
   });
 
   res.sendStatus(201);
+};
+
+let getCustomer = (req, res, next) => {
+  res.send('NOT IMPLEMENTED');
+};
+
+module.exports = {
+  index: index,
+  login: login,
+  postCustomer: postCustomer,
+  getCustomer: getCustomer
 };
