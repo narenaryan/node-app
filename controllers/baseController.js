@@ -1,4 +1,4 @@
-let models = require('../models/baseModels.js');
+let models = require('../models/customerModel.js');
 let jwt = require('jsonwebtoken');
 let config = require('../config.js');
 
@@ -38,4 +38,22 @@ exports.login = (req, res) => {
       }
     });
   });
+};
+
+exports.postCustomer = (req, res, next) => {
+  let newCustomer = new models.Customer({
+    username: req.body.username,
+    password: req.body.password,
+    email: req.body.email,
+    firstName: req.body.firstName,
+    lastName: req.body.lastname
+  });
+
+  newCustomer.save((err) => {
+    if (err) {
+      return next(err);
+    }
+  });
+
+  res.sendStatus(201);
 };

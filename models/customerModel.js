@@ -14,7 +14,7 @@ let customerSchema = new Schema({
 });
 
 // Convert string password to hash
-customerSchema.pre('save', (next) => {
+customerSchema.pre('save', function (next) {
   let user = this;
 
   // only hash the password if it has been modified (or is new)
