@@ -32,6 +32,16 @@
   margin-top: 0px;
 }
 
-.PreviewComponent-container{
+.Component-container{
   margin-top: 2%;
+}
+
+tr:hover { 
+  background: #afc7dade;
+  cursor:pointer;
+}
+
+tr { 
+  border: 1px solid black;
+  padding: 16px; 
 }

@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const baseRouter = require('./routes/index.js');
 const db = require('./connection.js');
+var cors = require('cors');
 
 // Starting point of the server
 function main () {
@@ -12,6 +13,7 @@ function main () {
   app.use(bodyParser.urlencoded({ // Middleware
     extended: true
   }));
+  app.use(cors());
   app.use(bodyParser.json());
   app.use(morgan('combined'));
   app.use('/v1', baseRouter);

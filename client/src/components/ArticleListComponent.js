@@ -1,29 +1,46 @@
 import React from 'react';
 import { Button, Form } from 'semantic-ui-react';
 import { Table } from 'semantic-ui-react';
+import axios from 'axios';
+import ApiEndpoints from '../Api';
 
 const TableRow = ({row}) => (
   <Table.Row>
-    <Table.HeaderCell key={row.name}>{row.name}</Table.HeaderCell>
-    <Table.HeaderCell key={row.sku}>{row.sku}</Table.HeaderCell>
-    <Table.HeaderCell key={row.ean}>{row.ean}</Table.HeaderCell>
-    <Table.HeaderCell key={row.categories}>{row.categories}</Table.HeaderCell>
+    <Table.Cell key={row.name}>{row.name}</Table.Cell>
+    <Table.Cell key={row.sku}>{row.sku}</Table.Cell>
+    <Table.Cell key={row.ean}>{row.ean}</Table.Cell>
+    <Table.Cell key={row.categories}>{row.categories}</Table.Cell>
   </Table.Row>
 )
+
+function setPreview() {
+  console.log("test")
+}
 
 class ArticleListComponent extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {articles: [{
-      name: "Adidas Shoe",
-      sku: "jh45g3j4g5345",
-      ean: 1234567890123,
-      categories: ["Shoes", "Footwear"]
-    }]}
+    // Replace with an axios call
+    this.state = {articles: []}
+  }
+  componentDidMount() {
+    let self = this
+    let config = {
+      "headers": {'x-access-token': ApiEndpoints.jwtToken
+    },
+    };
+    axios.get(ApiEndpoints.get.articles(), config)
+    .then(function (response) {
+    self.setState({articles: response.data})
+    })
+    .catch(function (error) {
+    console.log(error);
+    })
   }
   render() {
     return (
-      <Table singleLine >
+      <div>
+      <Table color={'teal'} singleLine >
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Product Name</Table.HeaderCell>
@@ -35,10 +52,11 @@ class ArticleListComponent extends React.Component {
 
         <Table.Body>
           {this.state.articles.map(row => {
-              <TableRow row={row} />
+              return <TableRow key={row._id} row={row} onClick={setPreview}/>
           })}
         </Table.Body>
       </Table>
+      </div>
     )
   }
 }
