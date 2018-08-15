@@ -13,8 +13,8 @@ let ApiEndpoints = {
   },
   post: {
     customer: ``,
-    article: ``,
-    category: ``
+    article: () => {return `${host}/${apiVersion}/article/create`},
+    category: () => {return `${host}/${apiVersion}/category/create`}
   },
   put: {
     customer: ``,
@@ -24,8 +24,8 @@ let ApiEndpoints = {
   },
   delete: {
     customer: ``,
-    article: ``,
-    category: ``
+    article: (articleId) => {return `${host}/${apiVersion}/article/${articleId}`},
+    category: (categoryName) => {return `${host}/${apiVersion}/category/${categoryName}`}
   }
 }
 

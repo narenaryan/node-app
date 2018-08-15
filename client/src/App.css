@@ -38,6 +38,9 @@
 
 tr:hover { 
   background: #afc7dade;
+}
+
+.clickable {
   cursor:pointer;
 }
 

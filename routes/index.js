@@ -22,7 +22,7 @@ router.post('/article/create', middleware.checkToken, articleController.postArti
 router.post('/category/create', middleware.checkToken, categoryController.postCategory);
 
 router.put('/article/:articleId', middleware.checkToken, articleController.putArticle);
-router.put('category/:categoryName', middleware.checkToken, categoryController.putCategory);
+router.put('/category/:categoryName', middleware.checkToken, categoryController.putCategory);
 
 router.delete('/customer/:customerId', middleware.checkToken, baseController.deleteCustomer);
 router.delete('/article/:articleId', middleware.checkToken, articleController.deleteArticle);

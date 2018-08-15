@@ -7,7 +7,7 @@ const TableRow = ({row}) => (
   <Table.Row>
     <Table.Cell key={row._id}>{row._id}</Table.Cell>
     <Table.Cell key={row.parent}>{row.parent || ''}</Table.Cell>
-    <Table.Cell key={row._id + 'edit'}><Icon name='edit' />&nbsp;&nbsp;<Icon name='delete' color='red'/></Table.Cell>
+    <Table.Cell key={row._id + 'edit'}><Icon className="clickable" name='edit' />&nbsp;&nbsp;<Icon name='delete' className="clickable" color='red'/></Table.Cell>
   </Table.Row>
 )
 
@@ -16,8 +16,13 @@ class CategoryListComponent extends React.Component {
     super(props)
     // Replace with an axios call
     this.state = {categories: []}
+    this.refreshList = this.refreshList.bind(this)
   }
   componentDidMount() {
+    this.refreshList()
+  }
+
+  refreshList() {
     let self = this
     let config = {
       'headers': {'x-access-token': ApiEndpoints.jwtToken

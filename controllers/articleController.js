@@ -40,12 +40,33 @@ let postArticle = async (req, res, next) => {
   }
 };
 
-let deleteArticle = async (req, res, next) => {
-  try {
-    await Article.findById(req.params.articleId).remove();
-  } catch (err) {
-    res.status(500).send({error: err.message});
-  }
+let deleteArticle = (req, res, next) => {
+  // try {
+  //   await Article.remove({ _id: req.params.articleId });
+  // } catch (err) {
+  //   res.status(500).send({error: err.message});
+  // }
+
+  // Tried above method but there is a blocking call in the library,
+  // so falling back to promise based approach for DELETE call
+  Article.findByIdAndRemove(req.params.articleId)
+    .then(article => {
+      if (!article) {
+        return res.status(404).send({
+          message: 'Article not found with id ' + req.params.noteId
+        });
+      }
+      res.send({message: 'Article deleted successfully!'});
+    }).catch(err => {
+      if (err.kind === 'ObjectId' || err.name === 'NotFound') {
+        return res.status(404).send({
+          message: 'Article not found with id ' + req.params.noteId
+        });
+      }
+      return res.status(500).send({
+        message: 'Could not delete article with id ' + req.params.noteId
+      });
+    });
 };
 
 let getAllArticles = async (req, res, next) => {

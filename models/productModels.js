@@ -14,7 +14,7 @@ let categorySchema = new Schema({
 // An article can have Many-to-Many relation with categories
 let articleSchema = new Schema({
   sku: {type: String, required: true},
-  ean: {type: Number, required: true},
+  ean: {type: Number, required: true, unique: true},
   name: {type: String, required: true},
   stockQuantity: {type: Number, required: true},
   price: {type: Number, required: true},

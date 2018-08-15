@@ -4,10 +4,12 @@ import './App.css';
 import {Menu, Tab, Message} from 'semantic-ui-react';
 import {Container} from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css';
-import { Segment } from 'semantic-ui-react';
+import { Segment, Form, Button } from 'semantic-ui-react';
 import PreviewComponent from './components/PreviewComponent';
 import ArticleListComponent from './components/ArticleListComponent';
 import CategoryListComponent from './components/CategoryListComponent';
+import axios from 'axios';
+import ApiEndpoints from './Api';
 
 
 class App extends Component {
@@ -19,29 +21,86 @@ class App extends Component {
                           <div>     
                               <Container fluid className="Component-container">
                                 <Segment raised>
-                                  <PreviewComponent launchBanner={this.launchBanner}/>
+                                  <PreviewComponent postArticleToServer={this.postArticleToServer} launchBanner={this.launchBanner}/>
                                 </Segment>
                               </Container>
                               <Container fluid  className="Component-container">
-                                    <ArticleListComponent/>
+                                    <ArticleListComponent listenArticleUpdates={this.listenArticleUpdates}/>
                               </Container>
                           </div>
       },
       { menuItem: 'Categories', render: () => 
+          <div>
+            <Container fluid className="Component-container">
+            <Form>
+              <Form.Group unstackable widths={3}>
+                <Form.Input label='Category' value={this.state.category} onChange= {this.handleName.bind(this)} placeholder='name' />
+              </Form.Group>
+              <Button primary onClick={this.postCategoryToServer}>Add</Button>
+            </Form>
+            </Container>
           <Container fluid  className="Component-container">
             <CategoryListComponent />
           </Container>
+          </div>
       }
     ]
     this.launchBanner = this.launchBanner.bind(this)
+    this.postArticleToServer = this.postArticleToServer.bind(this)
+    this.postCategoryToServer = this.postCategoryToServer.bind(this)
   }
 
   getIntialState() {
     return {
       showBanner: false,
       bannerHeader: '',
-      bannerContent: ''
+      bannerContent: '',
+      category: ''
     }
+  }
+
+  handleName(e, data) {
+    this.setState({category: data.value})
+  }
+
+  postArticleToServer(body) {
+    let self = this
+    let config = {
+      'headers': {'x-access-token': ApiEndpoints.jwtToken
+    },
+    };
+    console.log(body);
+    axios.post(ApiEndpoints.post.article(), body, config)
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+    console.log(error);
+    })
+    .then(function () {
+    });
+  }
+  
+  postCategoryToServer() {
+    let body = {
+      name: this.state.category
+    }
+    let self = this
+    let config = {
+      'headers': {'x-access-token': ApiEndpoints.jwtToken
+    },
+    };
+    console.log(body);
+    axios.post(ApiEndpoints.post.category(), body, config)
+    .then(function (response) {
+      console.log(response);
+      this.launchBanner("Successfully create the category!")
+    })
+    .catch(function (error) {
+    console.log(error);
+    })
+    .then(function () {
+    });
   }
 
   launchBanner(message) {

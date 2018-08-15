@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Form } from 'semantic-ui-react';
-import { Table } from 'semantic-ui-react';
+import { Table, Icon } from 'semantic-ui-react';
 import axios from 'axios';
 import ApiEndpoints from '../Api';
 
@@ -11,7 +11,8 @@ const TableRow = ({row}) => (
     <Table.Cell key={row.ean}>{row.ean}</Table.Cell>
     <Table.Cell key={row.stockQuantity}>{row.stockQuantity}</Table.Cell>
     <Table.Cell key={row.price}>{row.price}</Table.Cell>
-    <Table.Cell key={row.categoryNames.join(",")}>{row.categoryNames.join(",")}</Table.Cell>
+    <Table.Cell key={row.categoryNames.join(",")}>{row.categoryNames.join(", ")}</Table.Cell>
+    <Table.Cell key={row._id}><Icon className="clickable" name='edit' /></Table.Cell>
   </Table.Row>
 )
 
@@ -60,6 +61,7 @@ class ArticleListComponent extends React.Component {
             <Table.HeaderCell>Stock Quantity</Table.HeaderCell>
             <Table.HeaderCell>Price</Table.HeaderCell>
             <Table.HeaderCell>Categories</Table.HeaderCell>
+            <Table.HeaderCell>Actions</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
 
