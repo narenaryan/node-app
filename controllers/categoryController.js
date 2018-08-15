@@ -7,7 +7,11 @@ let Category = models.Category;
 let getCategory = async (req, res, next) => {
   try {
     let category = await Category.findById(req.params.categoryName);
-    res.send(category);
+    if (!category) {
+      res.status(404).send({error: 'Resource Not Found'});
+    } else {
+      res.send(category);
+    }
   } catch (err) {
     res.status(500).send({error: err.message});
   }
@@ -16,7 +20,8 @@ let getCategory = async (req, res, next) => {
 let postCategory = async (req, res, next) => {
   let category = new Category({
     _id: req.body.name,
-    articles: req.body.articles
+    articles: req.body.articles,
+    parent: req.body.parent || null
   });
   try {
     let result = await category.save();
@@ -31,9 +36,12 @@ let postCategory = async (req, res, next) => {
 };
 
 let deleteCategory = async (req, res, next) => {
+  console.log(req.params.categoryName);
   try {
     await Category.findById(req.params.categoryName).remove();
+    res.status(200);
   } catch (err) {
+    console.log(err);
     res.status(500).send({error: err.message});
   }
 };
@@ -47,7 +55,7 @@ let getAllCategoris = async (req, res, next) => {
   }
 };
 
-let putArticlestoCategory = async (req, res, next) => {
+let putCategory = async (req, res, next) => {
   res.status(501).send('Method Not Implemented!');
 };
 
@@ -56,5 +64,5 @@ module.exports = {
   postCategory: postCategory,
   deleteCategory: deleteCategory,
   getAllCategoris: getAllCategoris,
-  putArticlestoCategory: putArticlestoCategory
+  putCategory: putCategory
 };

@@ -21,8 +21,8 @@ router.post('/customer/create', middleware.checkToken, baseController.postCustom
 router.post('/article/create', middleware.checkToken, articleController.postArticle);
 router.post('/category/create', middleware.checkToken, categoryController.postCategory);
 
-router.put('/add/articles/category/:categoryId/', middleware.checkToken, categoryController.putArticlestoCategory);
-router.put('/add/categories/article/:articleId/', middleware.checkToken, articleController.putCategoriestoArticle);
+router.put('/article/:articleId', middleware.checkToken, articleController.putArticle);
+router.put('category/:categoryName', middleware.checkToken, categoryController.putCategory);
 
 router.delete('/customer/:customerId', middleware.checkToken, baseController.deleteCustomer);
 router.delete('/article/:articleId', middleware.checkToken, articleController.deleteArticle);
