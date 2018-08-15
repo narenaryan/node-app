@@ -6,7 +6,7 @@ import ApiEndpoints from '../Api';
 const TableRow = ({row}) => (
   <Table.Row>
     <Table.Cell key={row._id}>{row._id}</Table.Cell>
-    <Table.Cell key={row.children.join(',')}>{row.children.join(',')}</Table.Cell>
+    <Table.Cell key={row.parent}>{row.parent || ''}</Table.Cell>
     <Table.Cell key={row._id + 'edit'}><Icon name='edit' />&nbsp;&nbsp;<Icon name='delete' color='red'/></Table.Cell>
   </Table.Row>
 )
@@ -38,7 +38,7 @@ class CategoryListComponent extends React.Component {
     <Table.Header>
       <Table.Row>
         <Table.HeaderCell>Name</Table.HeaderCell>
-        <Table.HeaderCell>Related Articles</Table.HeaderCell>
+        <Table.HeaderCell>Parent Category</Table.HeaderCell>
         <Table.HeaderCell>Actions</Table.HeaderCell>
       </Table.Row>
     </Table.Header>

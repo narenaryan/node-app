@@ -14,7 +14,7 @@ router.get('/customers', middleware.checkToken, baseController.getAllCustomers);
 router.get('/article/:articleId', middleware.checkToken, articleController.getArticle);
 router.get('/articles', middleware.checkToken, articleController.getAllArticles);
 router.get('/category/:categoryName', middleware.checkToken, categoryController.getCategory);
-router.get('/categories', middleware.checkToken, categoryController.getAllCategoris);
+router.get('/categories', middleware.checkToken, categoryController.getAllCategories);
 
 router.post('/login', baseController.login); // Step to access JWT
 router.post('/customer/create', middleware.checkToken, baseController.postCustomer);

@@ -9,7 +9,9 @@ const TableRow = ({row}) => (
     <Table.Cell key={row.name}>{row.name}</Table.Cell>
     <Table.Cell key={row.sku}>{row.sku}</Table.Cell>
     <Table.Cell key={row.ean}>{row.ean}</Table.Cell>
-    <Table.Cell key={row.categories}>{row.categories}</Table.Cell>
+    <Table.Cell key={row.stockQuantity}>{row.stockQuantity}</Table.Cell>
+    <Table.Cell key={row.price}>{row.price}</Table.Cell>
+    <Table.Cell key={row.categoryNames.join(",")}>{row.categoryNames.join(",")}</Table.Cell>
   </Table.Row>
 )
 
@@ -31,12 +33,21 @@ class ArticleListComponent extends React.Component {
     };
     axios.get(ApiEndpoints.get.articles(), config)
     .then(function (response) {
-    self.setState({articles: response.data})
+      for (let obj of response.data) {
+        obj['categoryNames'] = obj['categories'].map(item => item._id);
+        console.log(obj['categoryNames']);
+      }
+      self.setState({articles: response.data})
     })
     .catch(function (error) {
     console.log(error);
     })
   }
+  
+  getCategoryNames(categoryList) {
+    return categoryList.map(item => item._id);
+  }
+
   render() {
     return (
       <div>
@@ -46,6 +57,8 @@ class ArticleListComponent extends React.Component {
             <Table.HeaderCell>Product Name</Table.HeaderCell>
             <Table.HeaderCell>Product SKU</Table.HeaderCell>
             <Table.HeaderCell>EAN Number</Table.HeaderCell>
+            <Table.HeaderCell>Stock Quantity</Table.HeaderCell>
+            <Table.HeaderCell>Price</Table.HeaderCell>
             <Table.HeaderCell>Categories</Table.HeaderCell>
           </Table.Row>
         </Table.Header>

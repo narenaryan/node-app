@@ -47,7 +47,11 @@ class PreviewComponent extends React.Component {
           <Form.Input label='EAN Number' placeholder='EAN' />
           <Dropdown placeholder='Categories' fluid multiple search selection options={this.state.categories} />
         </Form.Group>
-        <Button type='submit'>Save</Button>
+        <Form.Group widths={2}>
+        <Form.Input label='Stock Quantity' placeholder='Quantity' />
+          <Form.Input label='Price (€)' placeholder='€' />
+        </Form.Group>
+        <Button primary onClick={this.props.launchBanner}>Add</Button>
       </Form>
     )
   }  

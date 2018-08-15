@@ -4,7 +4,7 @@ let Category = models.Category;
 
 let getArticle = async (req, res, next) => {
   try {
-    let article = await Article.findById(req.params.articleId);
+    let article = await Article.findById(req.params.articleId).populate('categories');
     if (!article) {
       res.status(404).send({error: 'Resource Not Found'});
     } else {
@@ -50,7 +50,7 @@ let deleteArticle = async (req, res, next) => {
 
 let getAllArticles = async (req, res, next) => {
   try {
-    let results = await Article.find();
+    let results = await Article.find().populate('categories');
     res.status(200).json(results);
   } catch (err) {
     res.status(500).send({error: err.message});

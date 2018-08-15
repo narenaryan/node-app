@@ -6,7 +6,7 @@ let Category = models.Category;
 
 let getCategory = async (req, res, next) => {
   try {
-    let category = await Category.findById(req.params.categoryName);
+    let category = await Category.findById(req.params.categoryName).populate('articles');
     if (!category) {
       res.status(404).send({error: 'Resource Not Found'});
     } else {
@@ -46,9 +46,9 @@ let deleteCategory = async (req, res, next) => {
   }
 };
 
-let getAllCategoris = async (req, res, next) => {
+let getAllCategories = async (req, res, next) => {
   try {
-    let results = await Category.find();
+    let results = await Category.find().populate('articles');
     res.status(200).json(results);
   } catch (err) {
     res.status(500).send({error: err.message});
@@ -63,6 +63,6 @@ module.exports = {
   getCategory: getCategory,
   postCategory: postCategory,
   deleteCategory: deleteCategory,
-  getAllCategoris: getAllCategoris,
+  getAllCategories: getAllCategories,
   putCategory: putCategory
 };
