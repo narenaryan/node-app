@@ -3,7 +3,7 @@ let apiVersion = 'v1'
 
 let ApiEndpoints = {
   // Bad: Move this to cookie session after successful login
-  jwtToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MzQzMjQ0MDMsImV4cCI6MTUzNDQxMDgwM30.jLwKDjseokninKZV1r49RhH-2LktMvNl4qRI-x1IDNk',
+  jwtToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MzQ1NzM1MDMsImV4cCI6MTUzNDY1OTkwM30.-BMHxLK__923UMhWgbKXvKBl0Z0b6EMwI4hqj2nXSUw',
   get: {
     customer: (customerId) => {return `${host}/${apiVersion}/customer/${customerId}`},
     article: (articleId) => {return `${host}/${apiVersion}/article/${articleId}`},
